@@ -10,7 +10,7 @@ from abstract_utilities.class_utils import *
 import ssl
 import time
 import logging
-def change_glob\([^)]*\):
+def change_glob(name, var):
     """
     Change the value of a global variable.
 
@@ -24,7 +24,7 @@ def change_glob\([^)]*\):
     globals()[name]=var
     return var
 class TLSAdapter(HTTPAdapter):
-    def ssl_options\([^)]*\):
+    def ssl_options(self):
         """
         Configure SSL options to disable TLSv1, TLSv1.1, and compression.
 
@@ -33,7 +33,7 @@ class TLSAdapter(HTTPAdapter):
         """
         return ssl.OP_NO_TLSv1 | ssl.OP_NO_TLSv1_1 | ssl.OP_NO_COMPRESSION
 
-    def __init__\([^)]*\):
+    def __init__(self, ssl_options=0, *args, **kwargs):
         """
         Initialize the TLSAdapter.
 
@@ -54,7 +54,7 @@ class TLSAdapter(HTTPAdapter):
                 string = string + delim + part
         return string
 
-    def get_ciphers\([^)]*\):
+    def get_ciphers(self):
         """
         Get the list of cipher suites.
 
@@ -63,8 +63,8 @@ class TLSAdapter(HTTPAdapter):
         """
         return "ECDHE-RSA-AES256-GCM-SHA384,ECDHE-ECDSA-AES256-GCM-SHA384,ECDHE-RSA-AES256-SHA384,ECDHE-ECDSA-AES256-SHA384,ECDHE-RSA-AES256-SHA,ECDHE-ECDSA-AES256-SHA,ECDHE-RSA-AES128-GCM-SHA256,ECDHE-RSA-AES128-SHA256,ECDHE-ECDSA-AES128-GCM-SHA256,ECDHE-ECDSA-AES128-SHA256,AES256-SHA,AES128-SHA".split(',')
 
-    def create_ciphers_string\([^)]*\):
-    """
+    def create_ciphers_string(self, ls=None):
+        """
         Create a string of cipher suites to be used in the TLS context.
 
         Args:
@@ -72,24 +72,24 @@ class TLSAdapter(HTTPAdapter):
 
         Returns:
             str: The string of cipher suites.
-    """
+        """
         if ls is None:
             ls = self.get_ciphers()
         cipher_string = self.add_string_list(ls=ls, delim=':')[:-1]
         globals()['CIPHERS'] = cipher_string
         return cipher_string
 
-    def init_poolmanager\([^)]*\):
-    """
+    def init_poolmanager(self, *args, **kwargs):
+        """
         Initialize the connection pool manager with the configured TLS context.
 
         Args:
             *args: Positional arguments for the superclass PoolManager.
             **kwargs: Keyword arguments for the superclass PoolManager.
-    """
+        """
         context = ssl_.create_urllib3_context(ciphers=self.create_ciphers_string(), cert_reqs=ssl.CERT_REQUIRED, options=self.ssl_options)
         self.poolmanager = PoolManager(*args, ssl_context=context, **kwargs)
-def create_columns\([^)]*\):
+def create_columns(ls, i, k):
     """
     Split a list into nested lists of specified size.
 
@@ -106,7 +106,7 @@ def create_columns\([^)]*\):
         lsN.append(list(ls[-k:]))
         ls = lsN
     return ls
-def is_valid\([^)]*\):
+def is_valid(url):
     """
     Check whether a URL is valid.
 
@@ -118,7 +118,7 @@ def is_valid\([^)]*\):
     """
     parsed = urlparse(url)
     return bool(parsed.netloc) and bool(parsed.scheme)
-def format_url\([^)]*\):
+def format_url(url):
     """
     Format a URL to include the 'https://' prefix if missing.
 
@@ -143,7 +143,7 @@ def try_request(url: str, session: type(requests.Session) = requests):
     except requests.exceptions.RequestException as e:
         print(e)
         return False
-def desktop_user_agents\([^)]*\):
+def desktop_user_agents():
     """
     Get a list of desktop user agent strings.
 
@@ -159,15 +159,15 @@ def desktop_user_agents\([^)]*\):
 def get_user_agent(user_agent=desktop_user_agents()[0]):
     return {"user-agent": user_agent}
 
-def get_parser_choices\([^)]*\):
+def get_parser_choices():
     """
     Get a list of available parser choices for BeautifulSoup.
 
     Returns:
         list: The list of parser choices.
     """
-        return ['html.parser', 'lxml', 'html5lib']
-def get_bs4_options\([^)]*\):
+    return ['html.parser', 'lxml', 'html5lib']
+def get_bs4_options():
     """
     Get a list of BeautifulSoup objects and their descriptions.
 
@@ -199,7 +199,7 @@ def get_soup(data, selected_option: str = get_parser_choices()[0]):
     except:
         soup = None
     return soup
-def find_all_soup\([^)]*\):
+def find_all_soup(string):
     """
     Find all occurrences of a tag or string in the last_soup.
 
@@ -215,7 +215,7 @@ def get_status(url):
 def all_soup(data, tag, typ, clas, inp):
     print(getattr(last_soup, tag, typ))  # ,string))
     return getattr(last_soup, tag, typ)
-def find_all_soup\([^)]*\):
+def find_all_soup(string):
     """
     Find all occurrences of a tag or string in the last_soup.
 
@@ -226,7 +226,7 @@ def find_all_soup\([^)]*\):
         ResultSet: A collection of tags or strings that match the search criteria.
     """
     return last_soup.find_all(string)
-def parse_all\([^)]*\):
+def parse_all(data):
     """
     Parse the HTML data to get lists of tag types, tag descriptions, tags, and classes.
 
@@ -254,7 +254,7 @@ def parse_all\([^)]*\):
                     if dat[c + 1] not in ls_class:
                         ls_class.append(dat[c + 1])
     return ls_type, ls_desc, ls_tag, ls_class
-def parse_react_source\([^)]*\):
+def parse_react_source(data):
     """
     Parse the HTML data to extract React source code from script tags.
 
