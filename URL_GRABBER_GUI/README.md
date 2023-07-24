@@ -2,7 +2,7 @@
 # URL Grabber GUI
 
 URL Grabber is a dynamic Python-based GUI application that provides utilities for URL manipulation and content extraction from webpages. It utilizes the power of PySimpleGUI and BeautifulSoup to offer a user-friendly interface for these tasks. 
-
+![Screenshot 2023-07-24 091028](https://github.com/putkoff/Web-Data-Aggregation/assets/57512254/c168e757-4631-46e2-b17a-c12cf658a170)
 ## Features
 
 1. **URL Input**: This section of the GUI allows users to input a URL, which is then validated and processed.
